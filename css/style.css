@@ -1,5 +1,5 @@
 :root {
-  --navbar-width: 400px;
+  --navbar-width: 450px;
 }
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
@@ -28,7 +28,6 @@ a:focus {
     background: #fff;
     border: none;
     border-radius: 0;
-    margin-bottom: 40px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -58,10 +57,8 @@ h2{
 }
 
 #sidebar {
+    display: none;
     width: var(--navbar-width);
-    position: fixed;
-    top: 0;
-    left: 0;
     height: 100vh;
     z-index: 999;
     background: #34b190;
@@ -105,6 +102,10 @@ a[aria-expanded="true"] {
     background: #238e72;
 }
 
+#sidebar button {
+    font-size: 12px;
+}
+
 a[data-toggle="collapse"] {
     position: relative;
 }
@@ -143,11 +144,13 @@ a.download {
 .btn-presets{
     background: #fff;
     color: #34b190;
-
 }
 .btn-presets:hover{
     color: #238e72;
-
+}
+.btn-presets:active, .btn-presets.active{
+    background: #238e72;
+    color: #fff;
 }
 a.article,
 a.article:hover {
@@ -160,13 +163,9 @@ a.article:hover {
 ----------------------------------------------------- */
 
 #content {
-    width: calc(100% - var(--navbar-width));
     padding: 40px;
     min-height: 100vh;
     transition: all 0.3s;
-    position: absolute;
-    top: 0;
-    right: 0;
 }
 
 #content.active {
@@ -178,8 +177,11 @@ a.article:hover {
 ----------------------------------------------------- */
 
 @media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
     #sidebar {
-        margin-left: -var(--navbar-width);
+        width: 100%;
     }
     #sidebar.active {
         margin-left: 0;

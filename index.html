@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 	<!-- Our Custom CSS -->
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 	<!-- Scrollbar Custom CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
@@ -23,16 +24,42 @@
 
     <body>
 
+	<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+
+			<strong>Simulateur - Tarification du restaurant scolaire</strong>
+			<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<i class="fas fa-align-justify"></i>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="nav navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link active" href="#stats-panel">Statistiques 2020</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#tarification-2020-panel">Dans le vignoble</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#simulation-panel">Simulateur</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="https://getigne-collectif.fr">
+							<img src="https://getigne-collectif.fr/images/logo-header.png" style="height: 30px;">
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 	<div class="wrapper">
             <!-- Sidebar  -->
-            <nav id="sidebar">
-		<div class="sidebar-header">
-                    <h3>Calcul restauration scolaire</h3>
-		    <small>par Gétigné Collectif</small>
-		</div>
+		<nav id="sidebar">
+			<div class="sidebar-header">
+				<h3>Calcul restauration scolaire</h3>
+			</div>
 
-		<ul class="list-unstyled components">
-                    <h5 class="m-2">Paramètres : </h5>
+			<h5 class="m-2">Paramètres : </h5>
 		    <div class="form-group m-3">
 			<label for="coefficient">Taux d'effort : </label>
 			<div class="input-group mb-3">
@@ -76,8 +103,7 @@
 			<input type="checkbox" class="custom-control-input" id="check-annual" checked="">
 			<label class="custom-control-label" for="check-annual">Données annualisées</label>
 		    </div>
-		</ul>
-                    <h5 class="m-2">Presets : </h5>
+			<h5 class="m-2">Valeur initiales : </h5>
 		    <div class="row m-1">
 
 			<div class="col-4 px-1">
@@ -87,7 +113,7 @@
 			    <button type="button" id="naoned-preset" class="btn btn-block btn-presets">Nantes</button>
 			</div>
 			<div class="col-4 px-1">
-			    <button type="button" id="lamontagne-preset" class="btn btn-block btn-presets">La Montagne</button>
+			    <button type="button" id="lamontagne-preset" class="btn btn-block btn-presets active">La Montagne</button>
 			</div>
 		    </div>
 		    <br /><br />
@@ -132,7 +158,7 @@
 
             <ul class="list-unstyled CTAs">
                 <li>
-                    <a href="https://github.com/Getigne-Collectif/restauration-scolaire" class="download">Télécharger la source</a>
+                    <a href="https://github.com/Getigne-Collectif/restauration-scolaire" class="download"><i class="fab fa-github"></i> Télécharger le code source</a>
                 </li>
                 <li>
                     <a href="https://getigne-collectif.fr/" class="article">Site Gétigné Collectif</a>
@@ -142,76 +168,48 @@
 
         <!-- Page Content  -->
         <div id="content">
+			<section class="nav-panel" id="stats-panel" style="display: block">
+				<h2>Statistiques 2020</h2>
+				<div class="row">
+					<div class="col-md-7">
+						<div class="chart-container">
+						<h3 id="distribution">Distribution des enfants () par QF de la ville</h3>
+						<canvas id="restauration-scolaire-stat"></canvas>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<div class="chart-container">
+						<h3 id="prix-repas">Répartition du prix d'un repas ()</h3>
+						<canvas id="bilan-financier"></canvas>
+						</div>
+					</div>
+				</div>
+				<div class="line"></div>
+			</section>
 
-            <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
+			<section class="nav-panel" id="tarification-2020-panel" style="display: none">
+				<h2>Tarification en 2020 <span id="tarification-2020-type">(annuel)</span> <span id="total-2020" class="badge badge-primary">Total : </span></h2>
+				<div class="row">
+					<div class="col-md-10 offset-md-1">
+						<div class="chart-container">
+						<canvas id="restauration-scolaire-2020"></canvas>
+						</div>
+					</div>
+				</div>
+				<div class="line"></div>
+			</section>
 
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
-                        <span>Paramètres</span>
-                    </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#distribution">Distribution</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#tarification-2020">Tarification en 2020</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#simulation">Simulation</a>				
-                            </li>
-			    <li class="nav-item">
-			        <a class="nav-link" href="#simulation">
-			            <img src="https://getigne-collectif.fr/images/logo-header.png" style="height: 30px;">
-			        </a>				
-			    </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
-	    <h2>Statistiques 2020</h2>            
-	    <div class="row">
-		<div class="col-md-7">
-		    <div class="chart-container">
-			<h3 id="distribution">Distribution des enfants () par QF de la ville</h3>
-			<canvas id="restauration-scolaire-stat"></canvas>
-		    </div>
-		</div>
-		<div class="col-md-5">
-		    <div class="chart-container">
-			<h3 id="prix-repas">Répartition du prix d'un repas ()</h3>
-			<canvas id="bilan-financier"></canvas>
-		    </div>
-		</div>
-	    </div>
-            <div class="line"></div>
-
-            <h2 id="tarification-2020">Tarification en 2020 <span id="tarification-2020-type">(annuel)</span> <span id="total-2020" class="badge badge-primary">Total : </span></h2>
-	    <div class="row">
-		<div class="col-md-10 offset-md-1">
-		    <div class="chart-container">
-			<canvas id="restauration-scolaire-2020"></canvas>
-		    </div>
-		</div>
-	    </div>
-            <div class="line"></div>
-
-	    <h2 id="simulation">Simulation<sup>*</sup> <span data-toggle="tooltip" title=""La valeur du total calculé est dans le cas le plus défavorable pour la mairie. En effet les informations des quotients familiaux des enfants sont données par tranche. La valeur la plus faible de la tranche est donc considérée ici." id="total-simulation" class="badge badge-primary">Total : </span></h2>
-
-	    <div class="row">
-		<div class="col-md-10 offset-md-1">
-		    <div class="chart-container">
-			<canvas id="simulation-canvas"></canvas>
-		    </div>
-		</div>
-	    </div>
-	    <div class="line"></div>
+			<section class="nav-panel" id="simulation-panel" style="display: none">
+				<h2>Simulateur<sup>*</sup> <span data-toggle="tooltip" title=""La valeur du total calculé est dans le cas le plus défavorable pour la mairie. En effet les informations des quotients familiaux des enfants sont données par tranche. La valeur la plus faible de la tranche est donc considérée ici." id="total-simulation" class="badge badge-primary">Total : </span></h2>
+				<div class="row">
+					<div class="col-md-10 offset-md-1">
+						<div class="chart-container">
+						<canvas id="simulation-canvas"></canvas>
+						</div>
+					</div>
+				</div>
+				<div class="line"></div>
+			</section>
 
 	    <br /><br />
 	    <small><sup>*</sup><b>Estimation basse</b> : la valeur du total calculé est dans le cas le plus défavorable pour la mairie. En effet les informations des quotients familiaux des enfants sont données par tranche. La valeur la plus faible de la tranche est donc considérée ici.</small>

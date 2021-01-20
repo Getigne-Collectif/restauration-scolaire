@@ -1,9 +1,5 @@
 $(document).ready(function () {
 
-    $("#sidebar").mCustomScrollbar({
-        theme: "minimal"
-    });
-
     $('#sidebarCollapse').on('click', function () {
         // open or close navbar
         $('#sidebar, #content').toggleClass('active');
@@ -17,11 +13,22 @@ $(document).ready(function () {
 	container: 'body'
     });
 
-    $('.test, .nav-link, .navbar-brand, .new-button').click(function() {
-	var sectionTo = $(this).attr('href');
-	$('html, body').animate({
-	    scrollTop: $(sectionTo).offset().top
-	}, 1000);
+    $('.btn-presets').click(function() {
+		$('.btn-presets').removeClass('active')
+		$(this).addClass('active')
+	})
+
+    $('.test, .nav-link, .navbar-brand, .new-button').click(function(e) {
+    	e.preventDefault()
+		$('.nav-link').removeClass('active')
+		$(this).addClass('active')
+		$('.nav-panel').hide()
+		$($(this).attr('href')).show()
+		if ($(this).attr('href') === '#simulation-panel') {
+			$('#sidebar').show()
+		} else {
+			$('#sidebar').hide()
+		}
     });
 
     
